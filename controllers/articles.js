@@ -68,7 +68,7 @@ module.exports.deleteArticle = (req, res, next) => {
       if (article.owner.toString() !== owner) {
         throw new ForbiddenError({ message: OWNER_ERR });
       }
-      Article.deleteOne({ id })
+      Article.deleteOne(article)
         .then(() => {
           res.send({ message: `${ARTICLE_DELETED}` });
         })
