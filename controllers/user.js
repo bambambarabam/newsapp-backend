@@ -21,7 +21,7 @@ module.exports.createUser = (req, res, next) => {
     }))
     .catch((err) => {
       if (err.name === 'MongoError' && err.code === 11000) {
-        next(new ConflictError({ message: `${CONFLICT_ERR}` }));
+        throw new ConflictError({ message: `${CONFLICT_ERR}` });
       } return next(err);
     })
     .then((user) => res.status(201).send({

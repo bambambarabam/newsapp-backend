@@ -30,8 +30,8 @@ const validateId = celebrate({
 const validateUser = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().alphanum().min(8),
-    name: Joi.string().min(2).max(30),
+    password: Joi.string().required().min(8).regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/),
+    name: Joi.string().regex(/^[a-zA-Zа-яА-Я]/).min(2).max(30),
   }),
 });
 

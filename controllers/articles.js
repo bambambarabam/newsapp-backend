@@ -5,7 +5,7 @@ const InternalServerError = require('../errors/internal-server-err');
 const ForbiddenError = require('../errors/forbidden-err');
 
 const {
-  NOT_FOUND,
+  ARTICLE_NOT_FOUND,
   ARTICLE_DELETED,
   VALID_ERR,
   INTERNAL_SERVER_ERR,
@@ -33,7 +33,15 @@ module.exports.createArticle = (req, res, next) => {
         message: `${VALID_ERR}: ${err.message}`,
       }));
     })
-    .then((article) => res.status(201).send(article))
+    .then((article) => res.status(201).send({
+      keyword: article.keyword,
+      title: article.title,
+      text: article.text,
+      date: article.date,
+      source: article.source,
+      link: article.link,
+      image: article.image,
+    }))
     .catch(next);
 };
 
@@ -54,13 +62,13 @@ module.exports.deleteArticle = (req, res, next) => {
   Article.findById(id)
     .orFail()
     .catch(() => {
-      next(new NotFoundError({ message: `${NOT_FOUND}` }));
+      throw new NotFoundError({ message: `${ARTICLE_NOT_FOUND}` });
     })
     .then((article) => {
       if (article.owner.toString() !== owner) {
         throw new ForbiddenError({ message: OWNER_ERR });
       }
-      Article.findByIdAndDelete(id)
+      Article.deleteOne({ id })
         .then(() => {
           res.send({ message: `${ARTICLE_DELETED}` });
         })

@@ -14,9 +14,9 @@ const app = express();
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 app.use(cors());
+app.use(limiter);
 app.use(helmet());
 
-app.use(limiter);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
