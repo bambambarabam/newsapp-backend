@@ -36,11 +36,11 @@ module.exports.createArticle = (req, res, next) => {
     .then((article) => res.status(201).send({
       keyword: article.keyword,
       title: article.title,
-      text: article.text,
-      date: article.date,
+      description: article.text,
+      publishedAt: article.date,
       source: article.source,
-      link: article.link,
-      image: article.image,
+      url: article.link,
+      urlToImage: article.image,
     }))
     .catch(next);
 };
