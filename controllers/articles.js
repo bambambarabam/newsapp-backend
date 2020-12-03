@@ -34,13 +34,15 @@ module.exports.createArticle = (req, res, next) => {
       }));
     })
     .then((article) => res.status(201).send({
-      keyword: article.keyword,
-      title: article.title,
-      description: article.text,
-      publishedAt: article.date,
-      source: article.source,
-      url: article.link,
-      urlToImage: article.image,
+      data: {
+        keyword: article.keyword,
+        title: article.title,
+        text: article.text,
+        date: article.date,
+        source: article.source,
+        link: article.link,
+        image: article.image,
+      },
     }))
     .catch(next);
 };
@@ -49,7 +51,7 @@ module.exports.getArticles = (req, res, next) => {
   const owner = req.user._id;
   Article.find({ owner })
     .then((articles) => {
-      res.status(200).send(articles);
+      res.status(200).send({ data: articles });
     })
     .catch((err) => {
       next(new InternalServerError({ message: `${INTERNAL_SERVER_ERR} ${err.message}` }));
