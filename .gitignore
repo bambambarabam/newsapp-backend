@@ -47,3 +47,4 @@ node_modules
 
 # Optional REPL history
 .env
+node_modules
