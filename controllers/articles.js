@@ -52,15 +52,7 @@ module.exports.getArticles = (req, res, next) => {
   Article.find({ owner })
     .then((articles) => {
       res.status(200).send({
-        data: {
-          keyword: articles.keyword,
-          title: articles.title,
-          description: articles.description,
-          publishedAt: articles.publishedAt,
-          source: articles.source,
-          url: articles.url,
-          urlToImage: articles.urlToImage,
-        },
+        data: articles,
       });
     })
     .catch((err) => {
