@@ -51,7 +51,17 @@ module.exports.getArticles = (req, res, next) => {
   const owner = req.user._id;
   Article.find({ owner })
     .then((articles) => {
-      res.status(200).send({ data: articles });
+      res.status(200).send({
+        data: {
+          keyword: articles.keyword,
+          title: articles.title,
+          description: articles.text,
+          publishedAt: articles.date,
+          source: articles.source,
+          url: articles.link,
+          urlToImage: articles.image,
+        },
+      });
     })
     .catch((err) => {
       next(new InternalServerError({ message: `${INTERNAL_SERVER_ERR} ${err.message}` }));
