@@ -14,18 +14,18 @@ const {
 
 module.exports.createArticle = (req, res, next) => {
   const {
-    keyword, title, text, date, source, link, image,
+    keyword, title, description, publishedAt, url, urlToImage, source,
   } = req.body;
   const owner = req.user._id;
 
   Article.create({
     keyword,
     title,
-    text,
-    date,
+    description,
+    publishedAt,
+    url,
+    urlToImage,
     source,
-    link,
-    image,
     owner,
   })
     .catch((err) => {
@@ -37,11 +37,11 @@ module.exports.createArticle = (req, res, next) => {
       data: {
         keyword: article.keyword,
         title: article.title,
-        text: article.text,
-        date: article.date,
+        description: article.description,
+        publishedAt: article.publishedAt,
         source: article.source,
-        link: article.link,
-        image: article.image,
+        url: article.url,
+        urlToImage: article.urlToImage,
       },
     }))
     .catch(next);
@@ -55,11 +55,11 @@ module.exports.getArticles = (req, res, next) => {
         data: {
           keyword: articles.keyword,
           title: articles.title,
-          description: articles.text,
-          publishedAt: articles.date,
+          description: articles.description,
+          publishedAt: articles.publishedAt,
           source: articles.source,
-          url: articles.link,
-          urlToImage: articles.image,
+          url: articles.url,
+          urlToImage: articles.urlToImage,
         },
       });
     })
