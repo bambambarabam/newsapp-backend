@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const cors = require('cors');
 const { errors } = require('celebrate');
@@ -17,8 +16,8 @@ app.use(cors());
 app.use(limiter);
 app.use(helmet());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 mongoose.connect(SERVER_DB, {
   useNewUrlParser: true,
